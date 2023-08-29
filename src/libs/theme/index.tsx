@@ -18,6 +18,16 @@ const defaultTheme = createTheme({
     blueAccent: { main: '#51D3FF' },
     textGray: { main: '#c7d5e0' },
   },
+  breakpoints: {
+    values: {
+      xs: 0,
+      smx: 390,
+      sm: 600,
+      md: 900,
+      lg: 1200,
+      xl: 1600,
+    },
+  },
 });
 
 const LinkBehavior = React.forwardRef<
@@ -57,7 +67,19 @@ declare module '@mui/material/Button' {
   interface ButtonPropsVariantOverrides {
     filter: true;
     main: true;
+    readMore: true;
     swiper: true;
+  }
+}
+
+declare module '@mui/material/styles' {
+  interface BreakpointOverrides {
+    xs: true;
+    smx: true;
+    sm: true;
+    md: true;
+    lg: true;
+    xl: true;
   }
 }
 
@@ -96,11 +118,31 @@ export const muiTheme = createTheme({
     whiteBase: { main: '#ffffff' },
     darkBlue: { main: '#192C3E' },
     blackDarker: { main: '#0E1924' },
-    blueBase: { main: '#5F8FC0' },
+    blueBase: { main: '#1976d2' },
     blueAccent: { main: '#51D3FF' },
+  },
+  breakpoints: {
+    values: {
+      xs: 0,
+      smx: 390,
+      sm: 600,
+      md: 900,
+      lg: 1200,
+      xl: 1600,
+    },
   },
   typography: {
     fontFamily: ['Montserrat', 'sans-serif'].join(','),
+    body2: {
+      fontSize: '16px',
+      lineHeight: 'normal',
+      fontWeight: 400,
+    },
+    h6: {
+      fontSize: '28px',
+      lineHeight: 'normal',
+      fontWeight: 400,
+    },
     h5: {
       fontSize: '32px',
       lineHeight: 'normal',
@@ -116,13 +158,44 @@ export const muiTheme = createTheme({
       fontWeight: 400,
     },
     mainLink: {
-      textTransform: 'uppercase',
-      fontSize: '24px',
-      fontWeight: 700,
+      fontSize: '14px',
+      fontWeight: 600,
       color: `${defaultTheme.palette.whiteDim.main}`,
+      [defaultTheme.breakpoints.up('xl')]: {
+        fontSize: '24px',
+      },
+      [defaultTheme.breakpoints.up('md')]: {
+        fontSize: '20px',
+      },
     },
   },
   components: {
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          color: defaultTheme.palette.whiteBase.main,
+          '& .MuiFormLabel-root': {
+            fontSize: '16px',
+            color: defaultTheme.palette.textGray.main,
+          },
+          '& .MuiInputLabel-shrink': {
+            fontSize: '18px',
+          },
+        },
+      },
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          borderColor: defaultTheme.palette.whiteBase.main,
+          color: defaultTheme.palette.textGray.main,
+          fontSize: '16px',
+          '& fieldset': {
+            borderColor: 'rgba(255, 255, 255, 0.2)',
+          },
+        },
+      },
+    },
     MuiLink: {
       defaultProps: {
         component: LinkBehavior,
@@ -157,8 +230,14 @@ export const muiTheme = createTheme({
           },
         },
         {
-          props: { variant: 'main' },
-          style: {},
+          props: { variant: 'readMore' },
+          style: {
+            paddingLeft: 0,
+            background: 'none',
+            border: 'none',
+            fontSize: '16px',
+            color: defaultTheme.palette.blueBase.main,
+          },
         },
       ],
     },
@@ -168,8 +247,8 @@ export const muiTheme = createTheme({
           props: { variant: 'gradient' },
           style: {
             border: 0,
-            height: '1px',
-            backgroundImage: 'linear-gradient(90deg, transparent, #636363 50%, transparent)',
+            height: '2px',
+            backgroundImage: `linear-gradient(90deg, ${defaultTheme.palette.blueBase.main}, transparent)`,
           },
         },
       ],

@@ -1,6 +1,9 @@
 export const paths = {
   index: '/',
-  game: '/game/:id',
+  game: {
+    index: 'game',
+    id: ':id',
+  },
 } as const;
 
 export type RoutesObject = typeof paths;

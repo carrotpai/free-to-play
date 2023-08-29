@@ -14,7 +14,7 @@ function Header() {
       sx={{ bgcolor: 'blackBase.main', position: 'sticky', top: 0 }}
     >
       <Grid
-        width={{ md: '50%' }}
+        width={{ xl: '50%', md: '800px', sm: '580px', xs: '320px' }}
         container
         direction="row"
         wrap="nowrap"
@@ -22,9 +22,16 @@ function Header() {
         justifyContent={'space-between'}
       >
         <NavLinks links={links} />
-        <Grid container direction={'row'} wrap="nowrap" gap="24px" width="fit-content">
-          <Button>Log In</Button>
-          <Button>Join Free</Button>
+        <Grid
+          container
+          direction={'row'}
+          wrap="nowrap"
+          gap="24px"
+          width="fit-content"
+          display={{ sm: 'flex', xs: 'none' }}
+        >
+          <Button sx={{ fontSize: { xl: '24px', md: '20px', xs: '16px' } }}>Log In</Button>
+          <Button sx={{ fontSize: { xl: '24px', md: '20px', xs: '16px' } }}>Join Free</Button>
         </Grid>
       </Grid>
     </Stack>

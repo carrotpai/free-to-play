@@ -11,7 +11,13 @@ interface NavLinksProps {
 
 function NavLinks({ links }: NavLinksProps) {
   return (
-    <Grid container direction="row" gap="48px" width={'fit-content'} wrap="nowrap">
+    <Grid
+      container
+      direction="row"
+      gap={{ lg: '48px', xs: '24px' }}
+      width={'fit-content'}
+      wrap="nowrap"
+    >
       {links.map((link, i) => (
         <Link
           key={`link-${i}`}

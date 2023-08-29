@@ -19,13 +19,13 @@ interface CheckboxItemProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   name: string;
   label: string;
-  checked: boolean;
+  checked: () => boolean;
 }
 
 function CheckboxGroup({ type, title, items, value, onChangeItem }: CheckboxGroupProps) {
   const [isActive, setIsActive] = React.useState(false);
   return (
-    <Box width={'238px'}>
+    <Box width={'100%'}>
       <Button
         variant="filter"
         onClick={() => {
@@ -36,7 +36,26 @@ function CheckboxGroup({ type, title, items, value, onChangeItem }: CheckboxGrou
         {title}
       </Button>
       <Collapse timeout={300} in={isActive}>
-        <Box sx={{ border: '1px solid rgba( 255, 255, 255, 0.1)', padding: '0px 4px;' }}>
+        <Box
+          sx={{
+            border: '1px solid rgba( 255, 255, 255, 0.1)',
+            padding: '0px 4px',
+            overflowX: 'hidden',
+            overflowY: 'auto',
+            maxHeight: '390px',
+            '::-webkit-scrollbar': {
+              width: '2px',
+            },
+            '::-webkit-scrollbar-track': {
+              background: 'rgba(255, 255, 255, 0.1)',
+            },
+            '::-webkit-scrollbar-thumb': {
+              backgroundColor: (theme) => theme.palette.blueBase.main,
+              borderRadius: '0px',
+              border: (theme) => `1px solid ${theme.palette.blueBase.main}`,
+            },
+          }}
+        >
           <FormGroup>
             {items.map((item, i) => (
               <CheckboxGroupItem
@@ -44,7 +63,13 @@ function CheckboxGroup({ type, title, items, value, onChangeItem }: CheckboxGrou
                 onChange={onChangeItem}
                 name={item}
                 label={item}
-                checked={value ? value === item : false}
+                checked={() => {
+                  if (value) {
+                    if (type === 'one') return value === item;
+                    if (type === 'multiple') return value.includes(item);
+                    return false;
+                  } else return false;
+                }}
               />
             ))}
           </FormGroup>
@@ -55,6 +80,7 @@ function CheckboxGroup({ type, title, items, value, onChangeItem }: CheckboxGrou
 }
 
 function CheckboxGroupItem({ name, checked, label, onChange }: CheckboxItemProps) {
+  const status = checked();
   return (
     <FormControlLabel
       name={name}
@@ -65,7 +91,7 @@ function CheckboxGroupItem({ name, checked, label, onChange }: CheckboxItemProps
           background: 'rgba(255, 255, 255, 0.1)',
         },
       }}
-      control={<Checkbox checked={checked} onChange={onChange} />}
+      control={<Checkbox checked={status} onChange={onChange} />}
       label={<Typography sx={{ fontSize: '14px', padding: '4px' }}>{label}</Typography>}
     />
   );
