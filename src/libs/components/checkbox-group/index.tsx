@@ -13,6 +13,7 @@ type CheckboxGroupProps = {
   onChangeItem: (e: React.ChangeEvent<HTMLInputElement>) => void;
   title: string;
   items: string[];
+  isVisible?: boolean;
 } & ({ type: 'multiple'; value?: string[] } | { type: 'one'; value?: string });
 
 interface CheckboxItemProps {
@@ -22,8 +23,8 @@ interface CheckboxItemProps {
   checked: () => boolean;
 }
 
-function CheckboxGroup({ type, title, items, value, onChangeItem }: CheckboxGroupProps) {
-  const [isActive, setIsActive] = React.useState(false);
+function CheckboxGroup({ type, title, items, value, onChangeItem, isVisible }: CheckboxGroupProps) {
+  const [isActive, setIsActive] = React.useState(!!isVisible);
   return (
     <Box width={'100%'}>
       <Button
@@ -92,7 +93,13 @@ function CheckboxGroupItem({ name, checked, label, onChange }: CheckboxItemProps
         },
       }}
       control={<Checkbox checked={status} onChange={onChange} />}
-      label={<Typography sx={{ fontSize: '14px', padding: '4px' }}>{label}</Typography>}
+      label={
+        <Typography
+          sx={{ fontSize: '14px', padding: '4px', color: (theme) => theme.palette.whiteBase.main }}
+        >
+          {label}
+        </Typography>
+      }
     />
   );
 }

@@ -45,8 +45,8 @@ function PopularSwiper() {
         <ArrowIcon />
       </Button>
       <Grid
-        width={{ md: '720px', sm: '470px', xs: '320px' }}
-        height={{ md: '405px', sm: '260px', xs: '180px' }}
+        width={{ md: '720px', sm: '480px', xs: '320px' }}
+        height={{ md: '405px', sm: '290px', xs: '180px' }}
         sx={{ boxShadow: '0px 2px 12px 2px rgba(0, 0, 0, .5)' }}
       >
         <Swiper

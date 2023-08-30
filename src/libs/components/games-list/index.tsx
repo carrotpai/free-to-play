@@ -1,13 +1,13 @@
 import React from 'react';
 import GamesListItem from '../games-list-item';
-import { FixedSizeList as List } from 'react-window';
 import { useQuery } from '@tanstack/react-query';
 import { getGamesFn } from '@/libs/api/routes';
 import { GamesFilterData } from '@/libs/store';
 import { GameListResponseType } from '@/libs/types';
 import { getGamesQueryKey } from '@/libs/utils';
-import { Grid, Skeleton, Typography } from '@mui/material';
-import AutoSizer from 'react-virtualized-auto-sizer';
+import { Grid, Skeleton, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { AutoSizer, List, ScrollParams } from 'react-virtualized';
+import 'react-virtualized/styles.css';
 import { ErrorMessage } from '..';
 
 interface GamesListProps {
@@ -15,15 +15,42 @@ interface GamesListProps {
 }
 
 function GamesList({ queryArgs }: GamesListProps) {
+  const theme = useTheme();
+  const isSmMedia = useMediaQuery(theme.breakpoints.up('sm'));
+  const scrollTopRef = React.useRef<string>('0');
+  const [scrollOffset, setScrollOffset] = React.useState<number | undefined>(undefined);
   const { data, isLoading, isError } = useQuery<GameListResponseType>({
     queryFn: ({ signal }) => getGamesFn(queryArgs, signal),
     queryKey: getGamesQueryKey(queryArgs),
     staleTime: 1000 * 60 * 3,
   });
 
+  React.useEffect(() => {
+    const scrollTop = localStorage.getItem('gameListScroll');
+    if (scrollTop !== null) {
+      localStorage.removeItem('gameListScroll');
+      setScrollOffset(+scrollTop);
+    }
+    return () => localStorage.setItem('gameListScroll', scrollTopRef.current);
+  }, []);
+
+  React.useEffect(() => {
+    if (scrollOffset !== undefined) {
+      setScrollOffset(undefined);
+    }
+  }, [scrollOffset]);
+
+  const onScroll = React.useCallback(
+    (params: ScrollParams) => {
+      scrollTopRef.current = String(params.scrollTop);
+    },
+    [scrollTopRef]
+  );
+
   const Row = ({ index, style }: { index: number; style: React.CSSProperties }) =>
     data ? (
       <GamesListItem
+        key={`game-${data[index].id}`}
         id={data[index].id}
         style={style}
         title={data[index].title}
@@ -60,11 +87,12 @@ function GamesList({ queryArgs }: GamesListProps) {
           className="games-list"
           height={900}
           width={width}
-          itemSize={96}
-          itemCount={data?.length ?? 0}
-        >
-          {Row}
-        </List>
+          rowHeight={isSmMedia ? 96 : 144}
+          rowCount={data?.length ?? 0}
+          rowRenderer={Row}
+          scrollTop={scrollOffset}
+          onScroll={onScroll}
+        />
       )}
     </AutoSizer>
   ) : (

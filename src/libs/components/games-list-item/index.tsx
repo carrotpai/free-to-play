@@ -27,10 +27,11 @@ function GamesListItem({
         color={(theme) => theme.palette.whiteBase.main}
       >
         <Grid
-          height={82}
+          height={{ sm: 82, xs: 134 }}
           container
-          direction={'row'}
-          justifyContent={'space-between'}
+          direction={{ sm: 'row', xs: 'column' }}
+          gap={{ md: 'auto', sm: '12px', xs: '4px' }}
+          justifyContent={{ sm: 'space-between' }}
           wrap="nowrap"
           sx={{
             background: 'rgba( 0, 0, 0, 0.2 )',
@@ -42,30 +43,59 @@ function GamesListItem({
             },
           }}
         >
-          <Grid container direction={'row'} gap={'12px'} alignItems={'center'} wrap="nowrap">
-            <img src={thumbnail} alt={`game thumbnail ${title}`} width={160} height={80} />
+          <Grid
+            container
+            direction={'row'}
+            gap={{ sm: '12px', xs: '8px' }}
+            alignItems={'center'}
+            wrap="nowrap"
+          >
+            <Box
+              component={'img'}
+              src={thumbnail}
+              alt={`game thumbnail ${title}`}
+              width={160}
+              height={80}
+              minWidth={160}
+              minHeight={80}
+            />
             <Box>
-              <Typography>{title}</Typography>
-              <Typography sx={{ fontSize: '16px', color: (theme) => theme.palette.whiteDim.main }}>
+              <Typography fontSize={{ md: '20px', xs: '16px' }}>{title}</Typography>
+              <Typography
+                fontSize={{ md: '16px', xs: '14px' }}
+                sx={{
+                  color: (theme) => theme.palette.whiteDim.main,
+                  marginTop: { sm: '2px', xs: '4px' },
+                }}
+              >
                 {category}
               </Typography>
             </Box>
           </Grid>
           <Grid
             container
-            direction={'column'}
+            flexGrow={1}
+            direction={{ sm: 'column', xs: 'row' }}
             wrap="nowrap"
-            justifyContent={'center'}
-            width={'30%'}
+            alignItems={{ xs: 'center' }}
+            justifyContent={{ sm: 'center' }}
+            paddingRight={{ md: 'auto', sm: '12px' }}
+            width={{ md: '31%', sm: '35%', xs: '100%' }}
           >
-            <Typography fontSize={'16px'} color={(theme) => theme.palette.blueBase.main}>
+            <Typography
+              width={{ xs: '168px', sm: '100%' }}
+              textAlign={{ xs: 'center', sm: 'left' }}
+              fontSize={{ md: '16px', xs: '14px' }}
+              color={(theme) => theme.palette.blueBase.main}
+            >
               {formatTime(releaseDate) ?? 'unknown date'}
             </Typography>
             <Typography
+              width={{ sm: '100%', xs: '45%' }}
+              fontSize={{ md: '16px', xs: '14px' }}
               sx={{
-                fontSize: '16px',
                 color: (theme) => theme.palette.whiteDim.main,
-                marginTop: '8px',
+                marginTop: { md: '8px', sm: '4px', xs: '0px' },
               }}
             >
               {publisherTitle}

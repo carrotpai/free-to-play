@@ -11,8 +11,10 @@ function PopularSwiperSlide({ name, imgUrl }: PopularSwiperSlideProps) {
       component="img"
       alt={`game ${name}`}
       src={imgUrl}
-      maxWidth={{ md: '720px', sm: '470px', xs: '320px' }}
-      maxHeight={{ md: '405px', sm: '260px', xs: '180px' }}
+      width={{ md: '720px', sm: '480px', xs: '320px' }}
+      height={{ md: '405px', sm: '290px', xs: '180px' }}
+      maxWidth={{ md: '720px', sm: '480px', xs: '320px' }}
+      maxHeight={{ md: '405px', sm: '290px', xs: '180px' }}
     />
   );
 }

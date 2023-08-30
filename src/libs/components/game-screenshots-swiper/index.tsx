@@ -65,7 +65,7 @@ function GameScreenShotsSwiper({ screenshots, gameTitle }: GameScreenShotsSwiper
           <Swiper
             loop
             autoplay={{
-              delay: 3000,
+              delay: 5000,
               disableOnInteraction: true,
             }}
             ref={swiperRef}
@@ -81,6 +81,7 @@ function GameScreenShotsSwiper({ screenshots, gameTitle }: GameScreenShotsSwiper
                   alt={`screenshot game ${gameTitle}`}
                   width={imageSize.width}
                   height={imageSize.height}
+                  loading="lazy"
                 />
               </SwiperSlide>
             ))}

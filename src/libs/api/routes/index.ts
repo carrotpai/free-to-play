@@ -31,14 +31,14 @@ const getGamesURL = (args: Partial<GamesListQueryArgs>) => {
 };
 
 export const getGamesFn = async (args: Partial<GamesListQueryArgs>, signal?: AbortSignal) => {
-  await sleep(2000);
+  /* await sleep(2000); */ //для проверки лоадеров и ошибок
   /* throw new Error("error") */
   const response = await axiosInstance.get<GameListResponseType>(getGamesURL(args), { signal });
   return response.data;
 };
 
 export const getGameFn = async (id: string, signal?: AbortSignal) => {
-  await sleep(10000);
+  /* await sleep(5000); */
   const response = await axiosInstance.get(`game?id=${id}`, { signal });
   return response.data;
 };

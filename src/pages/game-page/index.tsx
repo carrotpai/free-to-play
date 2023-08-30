@@ -29,6 +29,8 @@ function GamePage() {
   const dataFromList = queryClient
     .getQueryData<GameListResponseType>(getGamesQueryKey(filterState))
     ?.find((item) => item.id === (id ? +id : -1));
+
+  //https://tanstack.com/query/latest/docs/react/guides/query-cancellation
   const { data, isFetching, isError } = useQuery<GameResponseType>({
     queryFn: ({ signal }) => getGameFn(id ?? '-1', signal),
     queryKey: ['game', id],

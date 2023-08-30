@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Grid,
   Box,
@@ -14,27 +13,25 @@ import CheckboxGroup from '../checkbox-group';
 import { useAppDispatch, useAppSelector } from '@/libs/store';
 import { platforms, sortOpts, tags } from '@/libs/constants';
 import { changePlatform, changeSortType, changeTags, clearFilter } from '@/libs/store/games-filter';
-import { ReactComponent as BurgerMenuIcon } from '@/assets/icons/menu.svg';
 import BurgerFilter from '../burger-filter';
 
 function GamesFilter() {
-  const [isBurgerVisible, setIsBurgerVisible] = React.useState(false);
   const theme = useTheme();
   const isMediumMedia = useMediaQuery(theme.breakpoints.up('md'));
   const filterState = useAppSelector((state) => state.gamesFilter);
   const dispatch = useAppDispatch();
   return (
     <>
-      {!isMediumMedia && (
-        <BurgerFilter isVisible={isBurgerVisible} handleClose={() => setIsBurgerVisible(false)} />
-      )}
+      {!isMediumMedia && <BurgerFilter />}
       <Grid
         container
         direction={'row'}
         justifyContent={'space-between'}
         sx={{ marginBottom: '16px' }}
       >
-        <Typography variant="h6">Browse games</Typography>
+        <Typography id="filter-start" variant="h6">
+          Browse games
+        </Typography>
       </Grid>
       <Grid
         container
@@ -44,16 +41,18 @@ function GamesFilter() {
         width={'100%'}
         justifyContent={'space-between'}
       >
-        <Box sx={{ width: '75%' }}>
+        <Box sx={{ width: { md: '75%', xs: '100%' } }}>
           <Grid
+            component={'div'}
             container
-            direction={'row'}
+            direction={{ md: 'row', xs: 'column' }}
+            gap={{ md: 'auto', xs: '12px' }}
             justifyContent={'space-between'}
             wrap="nowrap"
             sx={{ background: 'rgba( 0, 0, 0, 0.2 )', marginBottom: '24px', padding: '8px 12px' }}
           >
-            <Grid container direction={{ lg: 'row', md: 'column' }} gap="12px" wrap="nowrap">
-              <TextField size="small" sx={{ width: { md: '200px', sm: '150px' } }} />
+            <Grid container direction={{ md: 'row', xs: 'row-reverse' }} gap="12px" wrap="nowrap">
+              <TextField size="small" sx={{ width: { md: '200px', xs: '100%' } }} />
               <Button sx={{ fontSize: '16px' }}>Поиск</Button>
             </Grid>
             <Grid
@@ -75,7 +74,7 @@ function GamesFilter() {
                 size="small"
                 label="sort"
                 variant="outlined"
-                sx={{ width: { xl: '200px', md: '150px' } }}
+                sx={{ width: { xl: '200px', md: '150px', xs: '200px' } }}
               >
                 {sortOpts.map((opt) => (
                   <MenuItem key={opt.value} value={opt.value}>
@@ -88,30 +87,46 @@ function GamesFilter() {
           <Grid sx={{ minHeight: '900px' }}>
             <GamesList queryArgs={filterState} />
           </Grid>
+          {!isMediumMedia && (
+            <Box width={'100%'}>
+              <Typography
+                textAlign={'center'}
+                display={'block'}
+                component={'a'}
+                href="#filter-start"
+                color={(theme) => theme.palette.blueBase.main}
+                sx={{ textDecoration: 'none', marginTop: '24px' }}
+              >
+                К началу
+              </Typography>
+            </Box>
+          )}
         </Box>
-        <Grid container direction={'column'} wrap="nowrap" gap={'16px'} width={'20%'}>
-          <CheckboxGroup
-            title="Платформа"
-            items={platforms}
-            type="one"
-            value={filterState.platform}
-            onChangeItem={(e) => {
-              dispatch(changePlatform(e.target.name));
-            }}
-          />
-          <CheckboxGroup
-            title="Теги"
-            items={tags}
-            type="multiple"
-            value={filterState.tags}
-            onChangeItem={(e) => {
-              dispatch(changeTags(e.target.name));
-            }}
-          />
-          <Button onClick={() => dispatch(clearFilter())} sx={{ fontSize: '18px' }}>
-            Очистить фильтр
-          </Button>
-        </Grid>
+        {isMediumMedia && (
+          <Grid container direction={'column'} wrap="nowrap" gap={'16px'} width={'20%'}>
+            <CheckboxGroup
+              title="Платформа"
+              items={platforms}
+              type="one"
+              value={filterState.platform}
+              onChangeItem={(e) => {
+                dispatch(changePlatform(e.target.name));
+              }}
+            />
+            <CheckboxGroup
+              title="Теги"
+              items={tags}
+              type="multiple"
+              value={filterState.tags}
+              onChangeItem={(e) => {
+                dispatch(changeTags(e.target.name));
+              }}
+            />
+            <Button onClick={() => dispatch(clearFilter())} sx={{ fontSize: '18px' }}>
+              Очистить фильтр
+            </Button>
+          </Grid>
+        )}
       </Grid>
     </>
   );
