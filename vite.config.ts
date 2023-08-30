@@ -1,3 +1,5 @@
+/// <reference types="vitest" />
+/// <reference types="vite/client" />
 import { defineConfig } from 'vite';
 import fs from 'node:fs/promises';
 import path from 'node:path';
@@ -14,6 +16,12 @@ export default defineConfig({
   },
   server: {
     port: 3001,
+  },
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: ['./src/libs/tests/setup.ts'],
+    css: true,
   },
 });
 

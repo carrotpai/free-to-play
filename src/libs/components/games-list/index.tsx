@@ -1,14 +1,12 @@
 import React from 'react';
 import GamesListItem from '../games-list-item';
-import { useQuery } from '@tanstack/react-query';
-import { getGamesFn } from '@/libs/api/routes';
 import { GamesFilterData } from '@/libs/store';
-import { GameListResponseType } from '@/libs/types';
-import { getGamesQueryKey } from '@/libs/utils';
 import { Grid, Skeleton, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { AutoSizer, List, ScrollParams } from 'react-virtualized';
 import 'react-virtualized/styles.css';
 import { ErrorMessage } from '..';
+import { useGamesListQuery } from '@/libs/hooks';
+import { GameListItemResponseType } from '@/libs/types';
 
 interface GamesListProps {
   queryArgs?: GamesFilterData;
@@ -19,11 +17,7 @@ function GamesList({ queryArgs }: GamesListProps) {
   const isSmMedia = useMediaQuery(theme.breakpoints.up('sm'));
   const scrollTopRef = React.useRef<string>('0');
   const [scrollOffset, setScrollOffset] = React.useState<number | undefined>(undefined);
-  const { data, isLoading, isError } = useQuery<GameListResponseType>({
-    queryFn: ({ signal }) => getGamesFn(queryArgs, signal),
-    queryKey: getGamesQueryKey(queryArgs),
-    staleTime: 1000 * 60 * 3,
-  });
+  const { data, isLoading, isError } = useGamesListQuery(queryArgs);
 
   React.useEffect(() => {
     const scrollTop = localStorage.getItem('gameListScroll');
@@ -80,7 +74,7 @@ function GamesList({ queryArgs }: GamesListProps) {
 
   if (isError) return <ErrorMessage />;
 
-  return data.length ? (
+  return data && data.length ? (
     <AutoSizer disableHeight>
       {({ width }) => (
         <List

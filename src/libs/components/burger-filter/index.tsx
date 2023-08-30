@@ -12,7 +12,6 @@ import BurgerOverlay from '../burger-overlay';
 const modalRoot = document.getElementById('modals') as HTMLElement;
 
 function BurgerFilter() {
-  const theme = useTheme();
   const [isVisible, setIsVisible] = React.useState(false);
   const filterState = useAppSelector((state) => state.gamesFilter);
   const dispatch = useAppDispatch();
