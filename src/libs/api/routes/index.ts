@@ -1,9 +1,7 @@
 import { GameListResponseType } from '@/libs/types';
 import { axiosInstance } from '../axios';
-import { queryClient } from '@/libs/utils';
-import { Params } from 'react-router';
 
-const sleep = (time: number) => new Promise((res, rej) => setTimeout(res, time));
+const sleep = (time: number) => new Promise((res, _) => setTimeout(res, time));
 
 type GamesListQueryArgs =
   | {
@@ -38,7 +36,7 @@ export const getGamesFn = async (args: Partial<GamesListQueryArgs>, signal?: Abo
 };
 
 export const getGameFn = async (id: string, signal?: AbortSignal) => {
-  /* await sleep(5000); */
+  await sleep(5000);
   const response = await axiosInstance.get(`game?id=${id}`, { signal });
   return response.data;
 };

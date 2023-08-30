@@ -6,7 +6,6 @@ import { AutoSizer, List, ScrollParams } from 'react-virtualized';
 import 'react-virtualized/styles.css';
 import { ErrorMessage } from '..';
 import { useGamesListQuery } from '@/libs/hooks';
-import { GameListItemResponseType } from '@/libs/types';
 
 interface GamesListProps {
   queryArgs?: GamesFilterData;

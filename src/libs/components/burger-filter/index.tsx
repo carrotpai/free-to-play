@@ -3,7 +3,7 @@ import React from 'react';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import { useAppDispatch, useAppSelector } from '@/libs/store';
-import { Box, Button, Collapse, Grid, useTheme } from '@mui/material';
+import { Box, Button, Collapse, Grid } from '@mui/material';
 import { changePlatform, changeTags, clearFilter } from '@/libs/store/games-filter';
 import { platforms, tags } from '@/libs/constants';
 import CheckboxGroup from '../checkbox-group';

@@ -28,7 +28,7 @@ const gamesFilterDataSlice = createSlice({
     changeSortType: (state, action: PayloadAction<string>) => {
       state.sortBy = action.payload;
     },
-    clearFilter: (state, action: PayloadAction<void>) => {
+    clearFilter: (state) => {
       (state.platform = ''), (state.sortBy = ''), (state.tags = []);
     },
   },
