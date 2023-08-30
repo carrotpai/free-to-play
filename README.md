@@ -13,15 +13,11 @@
 
 ### Desktop
 
-![desktop](https://i.imgur.com/WVsOFp4.gif)
+![desktop](https://i.imgur.com/RFKrVh2.gif)
 
 ### Mobile
 
 ![mobile](https://i.imgur.com/XYbSUET.gif)
-
-### loader
-
-![load](https://i.imgur.com/t7DjKxk.gif)
 
 
 
