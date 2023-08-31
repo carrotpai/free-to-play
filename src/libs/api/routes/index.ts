@@ -36,7 +36,7 @@ export const getGamesFn = async (args: Partial<GamesListQueryArgs>, signal?: Abo
 };
 
 export const getGameFn = async (id: string, signal?: AbortSignal) => {
-  await sleep(5000);
+  /* await sleep(5000); */
   const response = await axiosInstance.get(`game?id=${id}`, { signal });
   return response.data;
 };
