@@ -13,7 +13,7 @@
 
 ### Desktop
 
-![desktop](https://i.imgur.com/RFKrVh2.gif)
+https://i.imgur.com/RFKrVh2.gif
 
 ### Mobile
 
